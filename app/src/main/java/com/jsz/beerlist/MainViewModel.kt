@@ -1,10 +1,11 @@
 package com.jsz.beerlist
 
+import com.jsz.beerlist.data.Beer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 
-class MainViewModel() : BaseViewModel<List<String>>(emptyList()) {
+class MainViewModel() : BaseViewModel<List<Beer>>(emptyList()) {
 
     private val repository = BeersRepository(PunkApiClient.punkApi)
 
