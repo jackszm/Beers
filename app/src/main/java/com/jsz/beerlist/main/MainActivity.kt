@@ -1,4 +1,4 @@
-package com.jsz.beerlist
+package com.jsz.beerlist.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,7 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.jsz.beerlist.R
 import com.jsz.beerlist.data.Beer
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -31,7 +32,9 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-class BeersAdapter : ListAdapter<Beer, BeerViewHolder>(diffCallback) {
+class BeersAdapter : ListAdapter<Beer, BeerViewHolder>(
+    diffCallback
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeerViewHolder {
         val inflater = LayoutInflater.from(parent.context)

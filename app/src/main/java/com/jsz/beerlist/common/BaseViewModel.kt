@@ -1,4 +1,4 @@
-package com.jsz.beerlist
+package com.jsz.beerlist.common
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
