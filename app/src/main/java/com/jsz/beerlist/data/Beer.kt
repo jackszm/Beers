@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 data class Beer(
     val name: String,
     val imageUrl: String,
-    val abv: Double,
+    val abv: String,
     val hops: List<String>,
     val malts: List<String>,
     val method: BeerMethod
@@ -24,7 +24,7 @@ fun ApiBeer.toBeer(): Beer {
     return Beer(
         name = name,
         imageUrl = imageUrl,
-        abv = abv,
+        abv = "${abv}%",
         hops = this.ingredients.hops.map { it.name },
         malts = this.ingredients.malts.map { it.name },
         method = BeerMethod(

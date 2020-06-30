@@ -78,7 +78,7 @@ class BeerViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     fun bind(uiBeer: UiBeer) {
         nameView.text = uiBeer.beer.name
         imageView.load(uiBeer.beer.imageUrl)
-        abvTextView.text = "${uiBeer.beer.abv}%"
+        abvTextView.text = uiBeer.beer.abv
         itemView.setOnClickListener { uiBeer.clickAction(uiBeer.beer) }
     }
 
