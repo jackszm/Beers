@@ -25,7 +25,8 @@ fun ApiBeer.toBeer(): Beer {
         name = name,
         imageUrl = imageUrl,
         abv = "${abv}%",
-        hops = this.ingredients.hops.map { it.name },
+        // we convert it to set and then back to list to filter out duplicated names
+        hops = this.ingredients.hops.map { "${it.name}" }.toSet().toList(),
         malts = this.ingredients.malts.map { it.name },
         method = BeerMethod(
             fermentationTemp = "${method.fermentation.temp.value} ${method.fermentation.temp.unit}",
