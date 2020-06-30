@@ -27,4 +27,4 @@ following elements:
 
 | | 
 | ---- | 
-| _coming soon_| 
+| ![](https://github.com/jackszm/Beers/blob/master/app_demo.gif)| 
