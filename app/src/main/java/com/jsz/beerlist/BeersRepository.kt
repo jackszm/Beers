@@ -1,6 +1,7 @@
 package com.jsz.beerlist
 
 import com.jsz.beerlist.data.Beer
+import com.jsz.beerlist.data.toBeer
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
@@ -11,6 +12,6 @@ class BeersRepository(
     fun getBeers(): Single<List<Beer>> {
         return punkApi.fetchBeers()
             .subscribeOn(Schedulers.io())
-            .map { it.map { beer -> Beer(beer.name, beer.imageUrl, beer.abv) } }
+            .map { it.map { apiBeer -> apiBeer.toBeer() } }
     }
 }

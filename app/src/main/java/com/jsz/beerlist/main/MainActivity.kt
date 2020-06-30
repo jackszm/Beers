@@ -12,13 +12,21 @@ import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
+import com.jsz.beerlist.AppNavigator
 import com.jsz.beerlist.R
-import com.jsz.beerlist.data.Beer
+import com.jsz.beerlist.common.exhaustive
+import com.jsz.beerlist.common.gone
+import com.jsz.beerlist.common.visible
+import com.jsz.beerlist.main.MainViewModel.State.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel by viewModels<MainViewModel>()
+    private val viewModel by viewModels<MainViewModel> {
+        MainViewModelFactory(
+            AppNavigator(this)
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,15 +34,29 @@ class MainActivity : AppCompatActivity() {
 
 
         val adapter = BeersAdapter()
-        recycler_view.adapter = adapter
+        beersRecyclerView.adapter = adapter
 
-        viewModel.state.observe(this) {
-            adapter.submitList(it)
+        viewModel.state.observe(this) { state ->
+            when (state) {
+                Loading -> {
+                    loadingErrorView.showLoading()
+                    beersRecyclerView.gone()
+                }
+                is Data -> {
+                    loadingErrorView.gone()
+                    beersRecyclerView.visible()
+                    adapter.submitList(state.beers)
+                }
+                Error -> {
+                    loadingErrorView.showError()
+                    beersRecyclerView.gone()
+                }
+            }.exhaustive
         }
     }
 }
 
-class BeersAdapter : ListAdapter<Beer, BeerViewHolder>(diffCallback) {
+class BeersAdapter : ListAdapter<UiBeer, BeerViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeerViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -53,22 +75,21 @@ class BeerViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     private val abvTextView = itemView.findViewById<TextView>(R.id.beer_abv)
     private val imageView = itemView.findViewById<ImageView>(R.id.beer_image)
 
-    fun bind(beer: Beer) {
-        nameView.text = beer.name
-        imageView.load(beer.imageUrl)
-        abvTextView.text = "${beer.abv}%"
+    fun bind(uiBeer: UiBeer) {
+        nameView.text = uiBeer.beer.name
+        imageView.load(uiBeer.beer.imageUrl)
+        abvTextView.text = "${uiBeer.beer.abv}%"
+        itemView.setOnClickListener { uiBeer.clickAction(uiBeer.beer) }
     }
 
 }
 
-private val diffCallback = object : ItemCallback<Beer>() {
-    override fun areItemsTheSame(oldItem: Beer, newItem: Beer): Boolean {
-        return oldItem.name == newItem.name
+private val diffCallback = object : ItemCallback<UiBeer>() {
+    override fun areItemsTheSame(oldItem: UiBeer, newItem: UiBeer): Boolean {
+        return oldItem.beer.name == newItem.beer.name
     }
 
-    override fun areContentsTheSame(oldItem: Beer, newItem: Beer): Boolean {
+    override fun areContentsTheSame(oldItem: UiBeer, newItem: UiBeer): Boolean {
         return oldItem == newItem
     }
-
 }
-
