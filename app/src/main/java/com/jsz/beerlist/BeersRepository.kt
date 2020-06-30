@@ -11,6 +11,6 @@ class BeersRepository(
     fun getBeers(): Single<List<Beer>> {
         return punkApi.fetchBeers()
             .subscribeOn(Schedulers.io())
-            .map { it.map { beer -> Beer(beer.name) } }
+            .map { it.map { beer -> Beer(beer.name, beer.imageUrl, beer.abv) } }
     }
 }

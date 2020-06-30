@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class ApiBeer(
-//    @Json(name = "abv") val abv: Double,
+    @Json(name = "abv") val abv: Double,
 //    @Json(name = "attenuation_level") val attenuationLevel: Double,
 //    @Json(name = "boil_volume") val apiBoilVolume: ApiBoilVolume,
 //    @Json(name = "brewers_tips") val brewersTips: String,
@@ -16,7 +16,7 @@ data class ApiBeer(
 //    @Json(name = "food_pairing") val foodPairing: List<String>,
 //    @Json(name = "ibu") val ibu: Double,
 //    @Json(name = "id") val id: Int,
-//    @Json(name = "image_url") val imageUrl: String,
+    @Json(name = "image_url") val imageUrl: String,
 //    @Json(name = "ingredients") val apiIngredients: ApiIngredients,
 //    @Json(name = "method") val apiMethod: ApiMethod,
     @Json(name = "name") val name: String

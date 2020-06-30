@@ -3,6 +3,7 @@ package com.jsz.beerlist.main
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.jsz.beerlist.R
 import com.jsz.beerlist.data.Beer
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,9 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-class BeersAdapter : ListAdapter<Beer, BeerViewHolder>(
-    diffCallback
-) {
+class BeersAdapter : ListAdapter<Beer, BeerViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeerViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -49,10 +49,14 @@ class BeersAdapter : ListAdapter<Beer, BeerViewHolder>(
 class BeerViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.item_beer, parent, false)) {
 
-    private val beerName = itemView.findViewById<TextView>(R.id.beer_name)
+    private val nameView = itemView.findViewById<TextView>(R.id.beer_name)
+    private val abvTextView = itemView.findViewById<TextView>(R.id.beer_abv)
+    private val imageView = itemView.findViewById<ImageView>(R.id.beer_image)
 
     fun bind(beer: Beer) {
-        beerName.text = beer.name
+        nameView.text = beer.name
+        imageView.load(beer.imageUrl)
+        abvTextView.text = "${beer.abv}%"
     }
 
 }
