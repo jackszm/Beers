@@ -19,6 +19,7 @@ class BeerDetailsActivity : AppCompatActivity() {
         beerImage.load(beer.imageUrl)
         beerName.text = beer.name
         beerAbv.text = beer.abv
+        beerDescription.text = beer.description
         beerHops.text = beer.hops.joinToString(", ")
         beerMalts.text = beer.malts.joinToString(", ")
         beerMethods.text = beer.method.mashTemp.joinToString(", ")

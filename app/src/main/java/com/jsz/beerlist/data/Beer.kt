@@ -8,6 +8,7 @@ data class Beer(
     val name: String,
     val imageUrl: String,
     val abv: String,
+    val description: String,
     val hops: List<String>,
     val malts: List<String>,
     val method: BeerMethod
@@ -25,8 +26,9 @@ fun ApiBeer.toBeer(): Beer {
         name = name,
         imageUrl = imageUrl,
         abv = "${abv}%",
+        description = description,
         // we convert it to set and then back to list to filter out duplicated names
-        hops = this.ingredients.hops.map { "${it.name}" }.toSet().toList(),
+        hops = this.ingredients.hops.map { it.name }.toSet().toList(),
         malts = this.ingredients.malts.map { it.name },
         method = BeerMethod(
             fermentationTemp = "${method.fermentation.temp.value} ${method.fermentation.temp.unit}",
