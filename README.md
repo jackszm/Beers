@@ -23,7 +23,7 @@ following elements:
 - Display all Malts in a list
 - Display all Methods in a list
 
-## Demo 
+### Demo 
 
 | | 
 | ---- | 
